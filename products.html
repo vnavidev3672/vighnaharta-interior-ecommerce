@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products - Vighnaharta House Of Interiors</title>
+    <link rel="stylesheet" href="style.css?v=3" />
+    <link rel="stylesheet" href="products.css?v=3" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .cat-tabs {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 25px 0 35px;
+        justify-content: center;
+      }
+      .cat-tab-btn {
+        padding: 10px 18px;
+        background: #f0f0f0;
+        color: #444;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 1px solid #ddd;
+      }
+      .cat-tab-btn:hover,
+      .cat-tab-btn.active {
+        background: #ff523b;
+        color: #fff;
+        border-color: #ff523b;
+        box-shadow: 0 4px 12px rgba(255, 82, 59, 0.3);
+      }
+      .category-section {
+        margin-bottom: 40px;
+        background: #fff;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      }
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #ff523b;
+        padding-bottom: 12px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .section-header h3 {
+        font-size: 22px;
+        color: #333;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .admin-add-sec-btn {
+        background: #27ae60;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        transition: background 0.2s;
+        display: inline-block;
+      }
+      .admin-add-sec-btn:hover {
+        background: #219150;
+      }
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+      }
+      .product-card {
+        background: #fafafa;
+        border: 1px solid #eee;
+        border-radius: 10px;
+        overflow: hidden;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        text-align: center;
+      }
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+      }
+      .product-card img {
+        width: 100%;
+        height: 250px;
+        object-fit: contain;
+        background-color: #f8f8f8;
+        padding: 5px;
+        box-sizing: border-box;
+      }
+      .product-card h4 {
+        padding: 12px;
+        font-size: 15px;
+        color: #333;
+        font-weight: 600;
+        margin: 0;
+      }
+      .empty-sec {
+        color: #888;
+        padding: 20px 0;
+        font-style: italic;
+      }
+      @media (max-width: 600px) {
+        .small-container {
+          padding-left: 15px !important;
+          padding-right: 15px !important;
+        }
+        .product-grid {
+          grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+          gap: 12px;
+        }
+        .product-card img {
+          height: 180px;
+        }
+        .section-header h3 {
+          font-size: 18px;
+        }
+        .admin-add-sec-btn {
+          font-size: 12px;
+          padding: 6px 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="page-header">
+      <div class="page-header__inner">
+        <div class="logo">
+          <a href="index.html">
+            <img src="images/logo1.jpg" alt="Logo" width="125" />
+          </a>
+        </div>
+
+        <nav class="page-nav">
+          <ul id="MenuItems">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html" class="active">Products</a></li>
+            <li><a href="About.html">About</a></li>
+            <li><a href="Contact.html">Contact</a></li>
+            <li><a href="account.html" id="accountLink">Account</a></li>
+          </ul>
+
+          <img
+            src="images/menu.png"
+            class="menu-icon"
+            alt="Menu"
+            onclick="menutoggle()"
+          />
+        </nav>
+      </div>
+    </header>
+
+    <div class="small-container" style="max-width: 1150px; margin: auto">
+      <h2 style="text-align: center; margin-top: 20px; color: #333">
+        Our Product Collections
+      </h2>
+
+      <!-- Category Filter Tabs -->
+      <div class="cat-tabs" id="categoryTabs">
+        <a href="products.html?cat=All" class="cat-tab-btn" data-cat="All"
+          >🏡 All Products</a
+        >
+        <a
+          href="products.html?cat=Darawaja"
+          class="cat-tab-btn"
+          data-cat="Darawaja"
+          >🚪 Darawaja (Doors)</a
+        >
+        <a href="products.html?cat=Divaan" class="cat-tab-btn" data-cat="Divaan"
+          >🛋️ Divaan</a
+        >
+        <a href="products.html?cat=Chair" class="cat-tab-btn" data-cat="Chair"
+          >🪑 Chairs</a
+        >
+        <a href="products.html?cat=Devara" class="cat-tab-btn" data-cat="Devara"
+          >🛕 Devara</a
+        >
+        <a href="products.html?cat=Bed" class="cat-tab-btn" data-cat="Bed"
+          >🛏️ Beds</a
+        >
+        <a href="products.html?cat=Other" class="cat-tab-btn" data-cat="Other"
+          >🪵 Other</a
+        >
+      </div>
+
+      <!-- Sections Container -->
+      <div id="sections-container">
+        <p style="text-align: center; padding: 40px; color: #888">
+          Loading product sections...
+        </p>
+      </div>
+
+      <!-- Admin: Add Section Button at bottom -->
+      <div
+        id="adminAddSectionBar"
+        style="display: none; text-align: center; margin: 30px 0 20px"
+      >
+        <button
+          onclick="addNewSection()"
+          style="
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #ff523b, #7b3f00);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 30px;
+            text-decoration: none;
+            box-shadow: 0 4px 16px rgba(255, 82, 59, 0.35);
+            transition: transform 0.2s;
+            border: none;
+            cursor: pointer;
+          "
+          onmouseover="this.style.transform = 'translateY(-2px)'"
+          onmouseout="this.style.transform = ''"
+        >
+          ➕ Add New Section
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="footer-col-2">
+            <img src="images/logo1.jpg" alt="" />
+            <p>
+              "Crafting Timeless Wooden Interiors to Enrich Every Home."
+              "Sustainably Designed Woodwork for Beautiful Living Spaces."
+            </p>
+          </div>
+          <div class="footer-col-3">
+            <h3>Follow Us</h3>
+            <ul>
+              <li>
+                <a href="https://www.facebook.com/share/199rTxgHs7/"
+                  >Facebook</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/vighnahartajaysingpur?igsh=MWF1NmpzaWhicDNtNg=="
+                  >Instagram</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://youtube.com/@omkarsutar9231?si=MWVcyYJgZU0RmVL7"
+                  >Youtube</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <hr />
+        <p class="copyright">Copyright 2026</p>
+      </div>
+    </div>
+
+    <script>
+      var MenuItems = document.getElementById("MenuItems");
+      MenuItems.style.maxHeight = "0px";
+      function menutoggle() {
+        if (MenuItems.style.maxHeight === "0px" || !MenuItems.style.maxHeight) {
+          MenuItems.style.maxHeight = "320px";
+        } else {
+          MenuItems.style.maxHeight = "0px";
+        }
+      }
+
+      // Check Admin Auth for Section Upload buttons
+      const isAdmin =
+        localStorage.getItem("token") &&
+        localStorage.getItem("userRole") === "1";
+      if (isAdmin) {
+        const accountLink = document.getElementById("accountLink");
+        if (accountLink) {
+          accountLink.textContent = "Logout (Admin)";
+          accountLink.href = "#";
+          accountLink.onclick = function (e) {
+            e.preventDefault();
+            localStorage.removeItem("token");
+            localStorage.removeItem("userRole");
+            localStorage.removeItem("username");
+            alert("Logged out");
+            window.location.href = "index.html";
+          };
+        }
+        // Show the Add Section button at the bottom
+        const addSecBar = document.getElementById("adminAddSectionBar");
+        if (addSecBar) addSecBar.style.display = "block";
+      }
+
+      const CATEGORIES = [
+        { id: "Darawaja", label: "Darawaja (Wooden Doors)", icon: "🚪" },
+        { id: "Divaan", label: "Divaan (Sofas & Settees)", icon: "🛋️" },
+        { id: "Chair", label: "Chairs", icon: "🪑" },
+        { id: "Devara", label: "Devara (Wooden Shrines)", icon: "🛕" },
+        { id: "Bed", label: "Beds", icon: "🛏️" },
+        { id: "Other", label: "Other Products", icon: "🪵" },
+      ];
+
+      function addNewSection() {
+        const sectionName = prompt(
+          "Enter new section name (e.g., Cradle, Tables):",
+        );
+        if (sectionName && sectionName.trim() !== "") {
+          const id = sectionName.trim().replace(/\s+/g, "-");
+          const customCats = JSON.parse(
+            localStorage.getItem("customCategories") || "[]",
+          );
+          if (
+            !customCats.find((c) => c.id.toLowerCase() === id.toLowerCase()) &&
+            !CATEGORIES.find((c) => c.id.toLowerCase() === id.toLowerCase())
+          ) {
+            customCats.push({ id: id, label: sectionName.trim(), icon: "📂" });
+            localStorage.setItem(
+              "customCategories",
+              JSON.stringify(customCats),
+            );
+            alert("Section added! You can now upload images to it.");
+            window.location.href = `products.html?cat=${id}`; // go to new tab
+          } else {
+            alert("Section already exists!");
+          }
+        }
+      }
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const activeCat = urlParams.get("cat") || "All";
+
+      // Highlight active tab
+      document.querySelectorAll(".cat-tab-btn").forEach((btn) => {
+        if (
+          btn.getAttribute("data-cat").toLowerCase() === activeCat.toLowerCase()
+        ) {
+          btn.classList.add("active");
+        }
+      });
+
+      async function loadSections() {
+        const container = document.getElementById("sections-container");
+        try {
+          const res = await fetch("/api/admin/images");
+          const data = await res.json();
+
+          if (!data.success) {
+            container.innerHTML =
+              '<p style="color:red; text-align:center;">Failed to load products.</p>';
+            return;
+          }
+
+          const images = data.images || [];
+          container.innerHTML = "";
+
+          // Add dynamic categories from DB
+          const existingIds = CATEGORIES.map((c) => c.id.toLowerCase());
+          images.forEach((img) => {
+            const catId = img.category;
+            if (!existingIds.includes(catId.toLowerCase())) {
+              CATEGORIES.push({
+                id: catId,
+                label:
+                  catId.charAt(0).toUpperCase() +
+                  catId.slice(1).replace(/-/g, " "),
+                icon: "📂",
+              });
+              existingIds.push(catId.toLowerCase());
+            }
+          });
+
+          // Add dynamic categories from localStorage
+          const customCats = JSON.parse(
+            localStorage.getItem("customCategories") || "[]",
+          );
+          customCats.forEach((cat) => {
+            if (!existingIds.includes(cat.id.toLowerCase())) {
+              CATEGORIES.push(cat);
+              existingIds.push(cat.id.toLowerCase());
+            }
+          });
+
+          // Render any missing tabs
+          const tabContainer = document.getElementById("categoryTabs");
+          const existingTabIds = Array.from(
+            tabContainer.querySelectorAll(".cat-tab-btn"),
+          ).map((el) => el.getAttribute("data-cat").toLowerCase());
+          CATEGORIES.forEach((cat) => {
+            if (!existingTabIds.includes(cat.id.toLowerCase())) {
+              const isActive =
+                activeCat.toLowerCase() === cat.id.toLowerCase()
+                  ? "active"
+                  : "";
+              tabContainer.innerHTML += `<a href="products.html?cat=${cat.id}" class="cat-tab-btn ${isActive}" data-cat="${cat.id}">${cat.icon} ${cat.label}</a>`;
+            }
+          });
+
+          // Determine which categories to show
+          const catsToShow =
+            activeCat.toLowerCase() === "all"
+              ? CATEGORIES
+              : CATEGORIES.filter(
+                  (c) => c.id.toLowerCase() === activeCat.toLowerCase(),
+                );
+
+          if (catsToShow.length === 0) {
+            container.innerHTML = `<p style="text-align:center; padding:40px; color:#888;">Category not found.</p>`;
+            return;
+          }
+
+          catsToShow.forEach((cat) => {
+            const catImages = images.filter((img) => img.category === cat.id);
+
+            const sectionDiv = document.createElement("div");
+            sectionDiv.className = "category-section";
+
+            let adminButtonHtml = "";
+            if (isAdmin) {
+              adminButtonHtml = `<a href="admin.html?action=upload&category=${encodeURIComponent(cat.id)}" class="admin-add-sec-btn">➕ Add Image to ${cat.id}</a>`;
+            }
+
+            let gridHtml = "";
+            if (catImages.length === 0) {
+              gridHtml = `<div class="empty-sec">No products uploaded in ${cat.label} section yet.</div>`;
+            } else {
+              gridHtml =
+                `<div class="product-grid">` +
+                catImages
+                  .map(
+                    (img) => `
+                  <div class="product-card">
+                    <img src="/${img.imageUrl}" alt="${img.title}" loading="lazy" />
+                    <h4>${img.title}</h4>
+                  </div>
+                `,
+                  )
+                  .join("") +
+                `</div>`;
+            }
+
+            sectionDiv.innerHTML = `
+              <div class="section-header">
+                <h3><span>${cat.icon}</span> ${cat.label}</h3>
+                ${adminButtonHtml}
+              </div>
+              ${gridHtml}
+            `;
+
+            container.appendChild(sectionDiv);
+          });
+        } catch (error) {
+          console.error("Error loading products:", error);
+          container.innerHTML =
+            '<p style="color:red; text-align:center; padding:40px;">Error connecting to server.</p>';
+        }
+      }
+
+      window.onload = loadSections;
+    </script>
+    <script src="translate.js"></script>
+  </body>
+</html>

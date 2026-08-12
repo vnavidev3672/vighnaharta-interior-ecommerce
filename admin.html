@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+      .admin-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      }
+      .admin-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #555;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+      }
+      .form-group input, .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .admin-btn {
+        width: 100%;
+        background: #ff523b;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .admin-btn:hover {
+        background: #530454;
+      }
+      .logout-btn {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #ff523b;
+        text-decoration: none;
+      }
+      .quote-preview-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 8px;
+        margin-top: 20px;
+      }
+      .quote-preview {
+        background: #fff;
+        padding: 30px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        color: #333;
+        font-family: 'Poppins', sans-serif;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        min-width: 550px;
+      }
+      .quote-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-bottom: 2px solid #ff523b;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+      }
+      .quote-header img {
+        width: 140px;
+        height: auto;
+      }
+      .quote-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      .quote-table th, .quote-table td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+        font-size: 14px;
+      }
+      .quote-table th {
+        background: #f8f9fa;
+      }
+      .flex-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+        align-items: center;
+      }
+      .flex-row input {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      /* Mobile Responsive Adjustments */
+      @media (max-width: 650px) {
+        .admin-container {
+          margin: 15px auto !important;
+          padding: 18px 12px !important;
+          width: 95% !important;
+        }
+        .flex-row.item-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+          background: #f9f9f9;
+          padding: 12px;
+          border-radius: 8px;
+          border: 1px solid #eee;
+        }
+        .flex-row.item-row .item-name {
+          grid-column: 1 / -1;
+          width: 100%;
+        }
+        .flex-row.item-row .item-measure {
+          grid-column: 1 / -1;
+          width: 100%;
+        }
+        .flex-row.item-row .item-qty {
+          width: 100%;
+        }
+        .flex-row.item-row .item-price {
+          width: 100%;
+        }
+        .flex-row.item-row button {
+          grid-column: 1 / -1;
+          width: 100%;
+          padding: 8px !important;
+        }
+        .actions {
+          flex-direction: column;
+        }
+      }
+      /* Admin Navbar Mobile */
+      @media (max-width: 700px) {
+        #AdminMenuItems {
+          display: none !important;
+        }
+        #adminMenuIcon {
+          display: block !important;
+        }
+      }
+    </style>
+    <script>
+      function adminMenuToggle() {
+        const mob = document.getElementById('adminMobileMenu');
+        if (mob) mob.style.display = (mob.style.display === 'none' || mob.style.display === '') ? 'block' : 'none';
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Full Site Navbar -->
+    <div style="background: #1a1008; padding: 14px 25px; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 100;">
+      <div class="logo">
+        <a href="index.html"><img src="images/logo1.jpg" alt="Logo" width="110px" style="border-radius:6px;" /></a>
+      </div>
+      <nav style="flex:1; display:flex; justify-content:flex-end; align-items:center; gap: 6px; flex-wrap: wrap;">
+        <ul id="AdminMenuItems" style="list-style:none; margin:0; padding:0; display:flex; gap:0; flex-wrap:wrap;">
+          <li style="display:inline-block; margin-left:20px;"><a href="index.html" style="color:#fff8f0; font-weight:500; font-size:15px; text-decoration:none;">Home</a></li>
+          <li style="display:inline-block; margin-left:20px;"><a href="products.html" style="color:#fff8f0; font-weight:500; font-size:15px; text-decoration:none;">Products</a></li>
+          <li style="display:inline-block; margin-left:20px;"><a href="index.html#about" style="color:#fff8f0; font-weight:500; font-size:15px; text-decoration:none;">About</a></li>
+          <li style="display:inline-block; margin-left:20px;"><a href="index.html#contact" style="color:#fff8f0; font-weight:500; font-size:15px; text-decoration:none;">Contact</a></li>
+          <li style="display:inline-block; margin-left:20px;"><a href="account.html" style="color:#fff8f0; font-weight:500; font-size:15px; text-decoration:none;">Account</a></li>
+        </ul>
+        <img src="images/menu.png" id="adminMenuIcon" style="width:28px; margin-left:16px; display:none; cursor:pointer; filter:brightness(0) invert(1);" onclick="adminMenuToggle()" alt="Menu" />
+      </nav>
+    </div>
+    <!-- Mobile dropdown for admin navbar -->
+    <div id="adminMobileMenu" style="display:none; background:#2a1808; padding:0;">
+      <a href="index.html" style="display:block; color:#fff8f0; padding:14px 20px; border-bottom:1px solid rgba(255,255,255,0.08); font-size:15px; text-decoration:none;">🏠 Home</a>
+      <a href="products.html" style="display:block; color:#fff8f0; padding:14px 20px; border-bottom:1px solid rgba(255,255,255,0.08); font-size:15px; text-decoration:none;">🛒 Products</a>
+      <a href="index.html#about" style="display:block; color:#fff8f0; padding:14px 20px; border-bottom:1px solid rgba(255,255,255,0.08); font-size:15px; text-decoration:none;">ℹ️ About</a>
+      <a href="index.html#contact" style="display:block; color:#fff8f0; padding:14px 20px; border-bottom:1px solid rgba(255,255,255,0.08); font-size:15px; text-decoration:none;">📞 Contact</a>
+      <a href="account.html" style="display:block; color:#fff8f0; padding:14px 20px; border-bottom:1px solid rgba(255,255,255,0.08); font-size:15px; text-decoration:none;">👤 Account</a>
+      <button onclick="showSection('upload')" style="display:block; width:100%; text-align:left; background:none; border:none; border-bottom:1px solid rgba(255,255,255,0.08); color:#ff523b; padding:14px 20px; font-size:15px; cursor:pointer;">📷 Upload Image</button>
+      <button onclick="showSection('quotation')" style="display:block; width:100%; text-align:left; background:none; border:none; border-bottom:1px solid rgba(255,255,255,0.08); color:#27ae60; padding:14px 20px; font-size:15px; cursor:pointer;">📑 Create Quotation</button>
+      <button onclick="logout()" style="display:block; width:100%; text-align:left; background:none; border:none; color:#e74c3c; padding:14px 20px; font-size:15px; cursor:pointer;">🚪 Logout</button>
+    </div>
+
+    <!-- Admin Tab Buttons (desktop) -->
+    <div style="text-align: center; margin: 18px auto 0; max-width: 800px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; padding: 0 15px;">
+      <a href="index.html" style="padding: 10px 20px; background: #333; color: #fff; border-radius: 5px; text-decoration: none; font-weight: 500;">🏠 Homepage</a>
+      <button id="tabUploadBtn" onclick="showSection('upload')" style="padding: 10px 20px; background: #ff523b; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 15px; font-weight: 600;">📷 Upload Image</button>
+      <button id="tabQuoteBtn" onclick="showSection('quotation')" style="padding: 10px 20px; background: #555; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 15px; font-weight: 600;">📑 Create Quotation</button>
+      <button onclick="logout()" style="padding: 10px 20px; background: #e74c3c; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 15px;">Logout</button>
+    </div>
+
+    <!-- Section 1: Upload Image -->
+    <div class="admin-container" id="uploadSection">
+      <h2>Admin Panel - Upload Image</h2>
+      <form id="uploadForm">
+        <div class="form-group">
+          <label>Image Title</label>
+          <input type="text" id="title" required placeholder="Enter image title" />
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select id="category" required>
+            <option value="Darawaja">Darawaja (Doors)</option>
+            <option value="Divaan">Divaan</option>
+            <option value="Chair">Chair</option>
+            <option value="Devara">Devara</option>
+            <option value="Bed">Bed</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Select Image</label>
+          <input type="file" id="imageFile" accept="image/*" required />
+        </div>
+        <button type="submit" class="admin-btn">Upload Image</button>
+      </form>
+    </div>
+
+    <!-- Section 2: Create Quotation -->
+    <div class="admin-container" id="quotationSection" style="max-width: 850px; display: none;">
+      <h2>Create Quotation</h2>
+      
+      <div class="form-group">
+        <label>Customer Name</label>
+        <input type="text" id="custName" placeholder="Enter customer name" oninput="updatePreview()" />
+      </div>
+      <div class="form-group">
+        <label>Customer Address</label>
+        <input type="text" id="custAddress" placeholder="Enter address" oninput="updatePreview()" />
+      </div>
+
+      <div class="form-group">
+        <label>Items</label>
+        <div id="itemsContainer">
+          <div class="flex-row item-row">
+            <input type="text" placeholder="Item Description" class="item-name" oninput="updatePreview()" style="flex: 2;">
+            <input type="text" placeholder="Measurement" class="item-measure" oninput="updatePreview()" style="flex: 1.5;">
+            <input type="number" placeholder="Qty" class="item-qty" oninput="updatePreview()" style="flex: 1;">
+            <input type="number" placeholder="Price" class="item-price" oninput="updatePreview()" style="flex: 1;">
+            <button type="button" onclick="removeItem(this)" style="padding: 5px 10px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer;">X</button>
+          </div>
+        </div>
+        <button type="button" class="admin-btn" style="background:#555; margin-top: 10px;" onclick="addItem()">+ Add Item</button>
+      </div>
+
+      <div class="actions">
+        <button class="admin-btn" onclick="downloadQuote('pdf')">Download PDF</button>
+        <button class="admin-btn" onclick="downloadQuote('image')">Download Image</button>
+      </div>
+
+      <!-- Live Preview -->
+      <h3 style="margin-top:40px; text-align:center;">Quotation Preview</h3>
+      <div class="quote-preview-wrapper">
+        <div id="quotation-card" class="quote-preview">
+          <div class="quote-header">
+            <div style="display: flex; flex-direction: column; align-items: flex-start;">
+              <img src="images/logo1.jpg" alt="VHI Logo" crossorigin="anonymous" style="width: 140px; height: auto;" />
+              <span style="font-size: 14px; font-weight: 700; color: #333; margin-top: 6px;">Vighnaharta House Of Interiors</span>
+            </div>
+            <div style="text-align: right;">
+              <h1 style="color:#ff523b; font-size:28px; margin: 0 0 6px 0; letter-spacing: 1px;">QUOTATION</h1>
+              <p id="quoteDate" style="font-weight: 500; color: #555; margin: 0; font-size: 14px;"></p>
+            </div>
+          </div>
+          
+          <div style="margin-bottom: 25px; border-bottom: 1px solid #eee; padding-bottom: 15px;">
+            <h4 style="color:#ff523b; font-size: 16px; margin-bottom: 8px; font-weight: 600;">Bill To</h4>
+            <p style="margin: 4px 0; font-size: 14px;"><strong>Customer Name :</strong> <span id="prevName">Customer Name</span></p>
+            <p style="margin: 4px 0; font-size: 14px;"><strong>Customer Address :</strong> <span id="prevAddress">Customer Address</span></p>
+          </div>
+
+          <table class="quote-table">
+            <thead>
+              <tr>
+                <th>Item Description</th>
+                <th>Measurement</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody id="prevItems">
+              <!-- Dynamic Items -->
+            </tbody>
+            <tfoot>
+              <tr>
+                <th colspan="4" style="text-align: right; font-size: 15px; font-weight: 700;">Grand Total</th>
+                <th id="prevTotal" style="font-size: 15px; font-weight: 700; color: #ff523b;">₹0.00</th>
+              </tr>
+            </tfoot>
+          </table>
+          
+          <div style="margin-top: 40px; border-top: 2px solid #ff523b; padding-top: 20px; text-align: center;">
+            <p style="font-size: 16px; font-weight: 600; color: #333; margin: 0;">Thank you from VHI family</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById('quoteDate').innerText = 'Date: ' + new Date().toLocaleDateString();
+      // Simple Auth Check — localStorage always returns strings, so compare as '1'
+      const storedRole = localStorage.getItem('userRole');
+      if (!storedRole || storedRole !== '1') {
+        alert("Unauthorized access! Redirecting to login.");
+        window.location.href = 'account.html';
+      }
+
+      function logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('username');
+        window.location.href = 'account.html';
+      }
+
+      function showSection(section) {
+        const uploadSec = document.getElementById('uploadSection');
+        const quoteSec = document.getElementById('quotationSection');
+        const tabUploadBtn = document.getElementById('tabUploadBtn');
+        const tabQuoteBtn = document.getElementById('tabQuoteBtn');
+
+        if (section === 'quotation') {
+          uploadSec.style.display = 'none';
+          quoteSec.style.display = 'block';
+          tabUploadBtn.style.background = '#555';
+          tabQuoteBtn.style.background = '#ff523b';
+        } else {
+          uploadSec.style.display = 'block';
+          quoteSec.style.display = 'none';
+          tabUploadBtn.style.background = '#ff523b';
+          tabQuoteBtn.style.background = '#555';
+        }
+      }
+
+      // Check URL query parameters to display requested tab and auto-select category
+      const urlParams = new URLSearchParams(window.location.search);
+      const requestedAction = urlParams.get('action');
+      const requestedCategory = urlParams.get('category');
+
+      if (requestedCategory) {
+        const catSelect = document.getElementById('category');
+        if (catSelect) catSelect.value = requestedCategory;
+      }
+
+      if (requestedAction === 'quotation') {
+        showSection('quotation');
+      } else {
+        showSection('upload');
+      }
+
+      document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const title = document.getElementById('title').value;
+        const category = document.getElementById('category').value;
+        const imageFile = document.getElementById('imageFile').files[0];
+
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('category', category);
+        formData.append('image', imageFile);
+
+        try {
+          const res = await fetch('/api/admin/upload', {
+            method: 'POST',
+            body: formData
+          });
+          const data = await res.json();
+          if (data.success) {
+            alert('Image uploaded successfully!');
+            document.getElementById('uploadForm').reset();
+          } else {
+            alert(data.message || 'Upload failed');
+          }
+        } catch (error) {
+          alert('An error occurred during upload');
+        }
+      });
+
+      // Quotation Logic
+      function addItem() {
+        const container = document.getElementById('itemsContainer');
+        const div = document.createElement('div');
+        div.className = 'flex-row item-row';
+        div.innerHTML = `
+          <input type="text" placeholder="Item Description" class="item-name" oninput="updatePreview()" style="flex: 2;">
+          <input type="text" placeholder="Measurement" class="item-measure" oninput="updatePreview()" style="flex: 1.5;">
+          <input type="number" placeholder="Qty" class="item-qty" oninput="updatePreview()" style="flex: 1;">
+          <input type="number" placeholder="Price" class="item-price" oninput="updatePreview()" style="flex: 1;">
+          <button type="button" onclick="removeItem(this)" style="padding: 5px 10px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer;">X</button>
+        `;
+        container.appendChild(div);
+        updatePreview();
+      }
+
+      function removeItem(btn) {
+        btn.parentElement.remove();
+        updatePreview();
+      }
+
+      function updatePreview() {
+        const name = document.getElementById('custName').value || 'Customer Name';
+        const address = document.getElementById('custAddress').value || 'Customer Address';
+        
+        document.getElementById('prevName').innerText = name;
+        document.getElementById('prevAddress').innerText = address;
+
+        const rows = document.querySelectorAll('.item-row');
+        const tbody = document.getElementById('prevItems');
+        tbody.innerHTML = '';
+        
+        let grandTotal = 0;
+
+        rows.forEach(row => {
+          const itemName = row.querySelector('.item-name').value || '-';
+          const measure = row.querySelector('.item-measure')?.value || '-';
+          const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+          const price = parseFloat(row.querySelector('.item-price').value) || 0;
+          const total = qty * price;
+          grandTotal += total;
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${itemName}</td>
+            <td>${measure}</td>
+            <td>${qty}</td>
+            <td>₹${price.toFixed(2)}</td>
+            <td>₹${total.toFixed(2)}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        document.getElementById('prevTotal').innerText = '₹' + grandTotal.toFixed(2);
+      }
+
+      async function downloadQuote(type) {
+        const element = document.getElementById('quotation-card');
+        
+        try {
+          const canvas = await html2canvas(element, { scale: 2, useCORS: true });
+          const imgData = canvas.toDataURL('image/png');
+
+          if (type === 'image') {
+            const link = document.createElement('a');
+            link.download = 'Quotation.png';
+            link.href = imgData;
+            link.click();
+          } else if (type === 'pdf') {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+            
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save('Quotation.pdf');
+          }
+        } catch (err) {
+          console.error("Error generating file", err);
+          alert("Error generating file. Check console for details.");
+        }
+      }
+
+      // Initialize empty preview
+      updatePreview();
+
+      // Initialize category dropdown from URL or localStorage
+      window.addEventListener('DOMContentLoaded', () => {
+        const catSelect = document.getElementById('category');
+        if (!catSelect) return;
+
+        // 1. Load from localStorage
+        const customCats = JSON.parse(localStorage.getItem('customCategories') || '[]');
+        customCats.forEach(cat => {
+          let exists = false;
+          for (let i = 0; i < catSelect.options.length; i++) {
+            if (catSelect.options[i].value.toLowerCase() === cat.id.toLowerCase()) exists = true;
+          }
+          if (!exists) {
+            const opt = document.createElement('option');
+            opt.value = cat.id;
+            opt.textContent = cat.label;
+            catSelect.appendChild(opt);
+          }
+        });
+
+        // 2. Pre-select from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const prefillCat = urlParams.get('category');
+        if (prefillCat) {
+          let exists = false;
+          for (let i = 0; i < catSelect.options.length; i++) {
+            if (catSelect.options[i].value.toLowerCase() === prefillCat.toLowerCase()) {
+              exists = true;
+              catSelect.value = catSelect.options[i].value;
+              break;
+            }
+          }
+          if (!exists) {
+            const opt = document.createElement('option');
+            opt.value = prefillCat;
+            opt.textContent = prefillCat.charAt(0).toUpperCase() + prefillCat.slice(1).replace(/-/g, ' ');
+            catSelect.appendChild(opt);
+            catSelect.value = prefillCat;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

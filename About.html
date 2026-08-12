@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us – Vighnaharta House Of Interiors</title>
+    <meta
+      name="description"
+      content="Learn about Vighnaharta House Of Interiors – crafting timeless wooden furniture and interiors since 2000."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="about.css" />
+  </head>
+  <body>
+    <!-- ===== NAVBAR ===== -->
+    <header class="page-header">
+      <div class="page-header__inner">
+        <div class="logo">
+          <a href="index.html"
+            ><img src="images/logo1.jpg" alt="Vighnaharta Logo" width="110"
+          /></a>
+        </div>
+        <nav class="page-nav">
+          <ul id="MenuItems">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="About.html" class="active">About</a></li>
+            <li><a href="Contact.html">Contact</a></li>
+            <li><a href="account.html" id="accountLink">Account</a></li>
+          </ul>
+          <img
+            src="images/menu.png"
+            class="menu-icon"
+            alt="Open menu"
+            onclick="menutoggle()"
+          />
+        </nav>
+      </div>
+    </header>
+
+    <!-- ===== HERO BANNER ===== -->
+    <section class="about-hero">
+      <div class="about-hero__overlay">
+        <h1 class="about-hero__title">About Us</h1>
+        <p class="about-hero__sub">
+          Crafting Timeless Wooden Interiors Since 2000
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== ABOUT CONTENT ===== -->
+    <main class="about-main">
+      <!-- Who We Are -->
+      <section class="about-section">
+        <div class="about-section__icon">🪵</div>
+        <h2>Who We Are</h2>
+        <p>
+          At <strong>Vighnaharta House Of Interiors</strong>, we believe that
+          beautiful interiors begin with quality, creativity, and thoughtful
+          design. We create and offer a wide range of beautifully designed
+          furniture and interior products that add comfort, elegance, and
+          character to your home.
+        </p>
+        <p>
+          From designer beds, sofas, chairs, and heel chairs to cradles,
+          wall-mounted furniture, and more — our products are crafted with a
+          focus on quality materials, attractive designs, and lasting
+          durability.
+        </p>
+      </section>
+
+      <!-- Our Mission -->
+      <section class="about-section about-section--alt">
+        <div class="about-section__icon">🎯</div>
+        <h2>Our Mission</h2>
+        <p>
+          Our goal is to help you transform your house into a beautiful,
+          elegant, and presentable space that truly feels like home. Whether you
+          are furnishing a new home or giving your existing space a fresh look,
+          Vighnaharta House Of Interiors brings together style, quality, and
+          functionality to suit your needs.
+        </p>
+      </section>
+
+      <!-- Why Choose Us -->
+      <section class="about-section">
+        <div class="about-section__icon">⭐</div>
+        <h2>Why Choose Us?</h2>
+        <div class="about-features">
+          <div class="about-feature-card">
+            <span class="about-feature-card__icon">🔨</span>
+            <h3>Handcrafted Quality</h3>
+            <p>
+              Every piece is hand-made by skilled artisans using premium wood.
+            </p>
+          </div>
+          <div class="about-feature-card">
+            <span class="about-feature-card__icon">🎨</span>
+            <h3>Custom Designs</h3>
+            <p>
+              We tailor designs to your taste, space, and budget requirements.
+            </p>
+          </div>
+          <div class="about-feature-card">
+            <span class="about-feature-card__icon">🌿</span>
+            <h3>Sustainable Wood</h3>
+            <p>
+              We source responsibly harvested timber for eco-friendly furniture.
+            </p>
+          </div>
+          <div class="about-feature-card">
+            <span class="about-feature-card__icon">🛡️</span>
+            <h3>Lasting Durability</h3>
+            <p>
+              Built to last generations — strong joints and premium finishes.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quote Banner -->
+      <div class="about-quote">
+        <blockquote>
+          "Built with Quality, Crafted with Care, Designed to Beautify
+          Everywhere"
+        </blockquote>
+        <cite>— Vighnaharta House Of Interiors</cite>
+      </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="footer-col-2">
+            <img src="images/logo1.jpg" alt="Vighnaharta Logo" />
+            <p>
+              "Crafting Timeless Wooden Interiors to Enrich Every Home."
+              "Sustainably Designed Woodwork for Beautiful Living Spaces."
+            </p>
+          </div>
+          <div class="footer-col-3">
+            <h3>Follow Us</h3>
+            <ul>
+              <li>
+                <a href="https://www.facebook.com/share/199rTxgHs7/"
+                  >Facebook</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/vighnahartajaysingpur?igsh=MWF1NmpzaWhicDNtNg=="
+                  >Instagram</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://youtube.com/@omkarsutar9231?si=MWVcyYJgZU0RmVL7"
+                  >Youtube</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <hr />
+        <p class="copyright">Copyright 2026</p>
+      </div>
+    </div>
+
+    <script>
+      var MenuItems = document.getElementById("MenuItems");
+      MenuItems.style.maxHeight = "0px";
+      function menutoggle() {
+        if (MenuItems.style.maxHeight === "0px" || !MenuItems.style.maxHeight) {
+          MenuItems.style.maxHeight = "450px";
+        } else {
+          MenuItems.style.maxHeight = "0px";
+        }
+      }
+    </script>
+  </body>
+</html>

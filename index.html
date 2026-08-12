@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vighnaharta House Of Interiors</title>
+    <meta
+      name="description"
+      content="Crafting timeless wooden interiors for every home. Explore our handcrafted doors, divans, devara, beds and more."
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Language switcher always visible */
+      #langSwitcher {
+        display: inline-block !important;
+      }
+      #langSelect {
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.15);
+        color: #fff;
+        font-size: 13px;
+        cursor: pointer;
+        backdrop-filter: blur(5px);
+      }
+      #langSelect option {
+        color: #333;
+        background: #fff;
+      }
+      .lang-loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #ff523b, #7b3f00, #ff523b);
+        background-size: 200%;
+        animation: langSlide 1.5s infinite;
+        z-index: 9999;
+        display: none;
+      }
+      @keyframes langSlide {
+        0% {
+          background-position: 0%;
+        }
+        100% {
+          background-position: 200%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Translation loading bar -->
+    <div class="lang-loading" id="langLoadingBar"></div>
+
+    <div class="container">
+      <div class="image-container">
+        <img src="images/sofa3.jpg" alt="Background Image" />
+
+        <header class="hero-header">
+          <div class="logo">
+            <a href="index.html"
+              ><img src="images/logo1.jpg" alt="Logo" width="125"
+            /></a>
+          </div>
+          <nav class="hero-nav">
+            <ul id="MenuItems">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="products.html">Products</a></li>
+              <li><a href="About.html">About</a></li>
+              <li><a href="Contact.html">Contact</a></li>
+              <li><a href="account.html" id="accountLink">Account</a></li>
+              <li id="langSwitcher">
+                <select id="langSelect">
+                  <option value="en">🌐 English</option>
+                  <option value="mr">🇮🇳 मराठी</option>
+                </select>
+              </li>
+            </ul>
+            <img
+              src="images/menu.png"
+              class="menu-icon"
+              alt="Menu"
+              onclick="menutoggle()"
+            />
+          </nav>
+        </header>
+        <div class="overlay-content">
+          <h1>
+            Where Quality Meets Creativity, Turning Spaces into Elegance and
+            Beauty
+          </h1>
+          <p>
+            Elevate your home with our top-grade wooden masterpieces — a perfect
+            fusion of strength, style, and artistic design.
+          </p>
+
+          <!-- Admin Quick Action Buttons (Shown when Admin is logged in) -->
+          <div
+            id="adminHeroActions"
+            style="
+              display: none;
+              margin-top: 20px;
+              background: rgba(0, 0, 0, 0.45);
+              backdrop-filter: blur(10px);
+              padding: 20px;
+              border-radius: 12px;
+              border: 1px solid rgba(255, 255, 255, 0.2);
+            "
+          >
+            <p
+              style="
+                margin-bottom: 12px;
+                font-weight: 600;
+                color: #ff523b;
+                font-size: 1.1rem;
+                text-shadow: none;
+              "
+            >
+              Admin Control Panel
+            </p>
+            <div
+              style="
+                display: flex;
+                gap: 15px;
+                justify-content: center;
+                flex-wrap: wrap;
+              "
+            >
+              <a
+                href="admin.html?action=upload"
+                class="btn"
+                style="
+                  background: #ff523b;
+                  margin: 0;
+                  padding: 12px 24px;
+                  font-size: 15px;
+                  font-weight: 600;
+                "
+                >📷 Upload Image</a
+              >
+              <a
+                href="admin.html?action=quotation"
+                class="btn"
+                style="
+                  background: #27ae60;
+                  margin: 0;
+                  padding: 12px 24px;
+                  font-size: 15px;
+                  font-weight: 600;
+                "
+                >📑 Create Quotation</a
+              >
+            </div>
+          </div>
+
+          <div id="userHeroActions" style="margin-top: 15px">
+            <a href="products.html" class="btn">Explore Now &#8594;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-----------Featured Products--------->
+    <section class="featured-section" id="about">
+      <div class="small-container">
+        <h2 class="title">Featured Products</h2>
+        <div class="row featured-row">
+          <!-- Each card links to its correct category section -->
+          <div class="col-1">
+            <a
+              href="products.html?cat=Darawaja"
+              class="featured-card"
+              onclick="return checkLogin(event);"
+            >
+              <img src="images/maindoor(1).jpg" alt="Polished main door" />
+              <h4>Polished Main Door</h4>
+            </a>
+          </div>
+          <div class="col-2">
+            <a
+              href="products.html?cat=Divaan"
+              class="featured-card"
+              onclick="return checkLogin(event);"
+            >
+              <img src="images/cradle3.jpg" alt="Wooden cradle / divan" />
+              <h4>Designer Cradle</h4>
+            </a>
+          </div>
+          <div class="col-3">
+            <a
+              href="products.html?cat=Devara"
+              class="featured-card"
+              onclick="return checkLogin(event);"
+            >
+              <img src="images/devaara.jpg" alt="Wooden devaara" />
+              <h4>Handcrafted Devara</h4>
+            </a>
+          </div>
+          <div class="col-4">
+            <a
+              href="products.html?cat=Bed"
+              class="featured-card"
+              onclick="return checkLogin(event);"
+            >
+              <img src="images/sofa1.jpg" alt="Wooden Bed" />
+              <h4>Premium Wooden Bed</h4>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!----------Footer--------->
+
+    <div class="footer" id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="footer-col-2">
+            <img src="images/logo1.jpg" alt="" />
+            <p>
+              "Crafting Timeless Wooden Interiors to Enrich Every Home."
+              "Sustainably Designed Woodwork for Beautiful Living Spaces."
+            </p>
+          </div>
+
+          <div class="footer-col-3">
+            <h3>Follow Us</h3>
+            <ul>
+              <li>
+                <a href="https://www.facebook.com/share/199rTxgHs7/"
+                  >Facebook</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/vighnahartajaysingpur?igsh=MWF1NmpzaWhicDNtNg=="
+                  >Instagram</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://youtube.com/@omkarsutar9231?si=MWVcyYJgZU0RmVL7"
+                  >Youtube</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <hr />
+        <p class="copyright">Copyright 2026</p>
+      </div>
+    </div>
+
+    <script>
+      var MenuItems = document.getElementById("MenuItems");
+      MenuItems.style.maxHeight = "0px";
+      function menutoggle() {
+        if (MenuItems.style.maxHeight === "0px" || !MenuItems.style.maxHeight) {
+          MenuItems.style.maxHeight = "450px";
+        } else {
+          MenuItems.style.maxHeight = "0px";
+        }
+      }
+
+      // Check if user is logged in before viewing products
+      function checkLogin(e) {
+        if (!localStorage.getItem("token")) {
+          e.preventDefault();
+          alert("Please login or signup to view this product!");
+          window.location.href = "account.html";
+          return false;
+        }
+        return true;
+      }
+
+      // Check Admin Login status
+      const storedRole = localStorage.getItem("userRole");
+      const token = localStorage.getItem("token");
+      if (token && storedRole === "1") {
+        const adminActions = document.getElementById("adminHeroActions");
+        if (adminActions) adminActions.style.display = "block";
+
+        const accountLink = document.getElementById("accountLink");
+        if (accountLink) {
+          accountLink.textContent = "Logout (Admin)";
+          accountLink.href = "#";
+          accountLink.onclick = function (e) {
+            e.preventDefault();
+            localStorage.removeItem("token");
+            localStorage.removeItem("userRole");
+            localStorage.removeItem("username");
+            alert("Admin logged out.");
+            window.location.reload();
+          };
+        }
+      }
+
+      // Show translation loading bar while translating
+      window.__showLangLoading = function (show) {
+        document.getElementById("langLoadingBar").style.display = show
+          ? "block"
+          : "none";
+      };
+    </script>
+
+    <!-- Translation engine — must be last script -->
+    <script src="translate.js"></script>
+  </body>
+</html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact – Vighnaharta House Of Interiors</title>
+    <meta
+      name="description"
+      content="Contact Vighnaharta House Of Interiors. Reach out to our proprietors for custom wooden furniture enquiries."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="contact.css" />
+  </head>
+  <body>
+    <!-- ===== NAVBAR ===== -->
+    <header class="page-header">
+      <div class="page-header__inner">
+        <div class="logo">
+          <a href="index.html"
+            ><img src="images/logo1.jpg" alt="Vighnaharta Logo" width="110"
+          /></a>
+        </div>
+        <nav class="page-nav">
+          <ul id="MenuItems">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="About.html">About</a></li>
+            <li><a href="Contact.html" class="active">Contact</a></li>
+            <li><a href="account.html" id="accountLink">Account</a></li>
+          </ul>
+          <img
+            src="images/menu.png"
+            class="menu-icon"
+            alt="Open menu"
+            onclick="menutoggle()"
+          />
+        </nav>
+      </div>
+    </header>
+
+    <!-- ===== HERO BANNER ===== -->
+    <section class="contact-hero">
+      <div class="contact-hero__overlay">
+        <h1 class="contact-hero__title">Contact Us</h1>
+        <p class="contact-hero__sub">We're here to help – reach out anytime</p>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT CONTENT ===== -->
+    <main class="contact-main">
+      <!-- Contact cards -->
+      <div class="contact-cards">
+        <div class="contact-card">
+          <div class="contact-card__icon">📞</div>
+          <h2 class="contact-card__label">Prop: Kumar Sutar</h2>
+          <a href="tel:9921484845" class="contact-card__number"
+            >+91 99214 84845</a
+          >
+        </div>
+        <div class="contact-card">
+          <div class="contact-card__icon">📞</div>
+          <h2 class="contact-card__label">Prop: Omkar Sutar</h2>
+          <a href="tel:9637933672" class="contact-card__number"
+            >+91 96379 33672</a
+          >
+        </div>
+      </div>
+
+      <!-- Social links -->
+      <div class="contact-social">
+        <h3 class="contact-social__title">Follow Us</h3>
+        <div class="contact-social__links">
+          <a
+            href="https://www.instagram.com/vighnahartajaysingpur?igsh=MWF1NmpzaWhicDNtNg=="
+            class="contact-social__btn contact-social__btn--insta"
+            target="_blank"
+            rel="noopener"
+          >
+            📸 Instagram
+          </a>
+          <a
+            href="https://youtube.com/@omkarsutar9231?si=MWVcyYJgZU0RmVL7"
+            class="contact-social__btn contact-social__btn--yt"
+            target="_blank"
+            rel="noopener"
+          >
+            ▶️ YouTube
+          </a>
+        </div>
+      </div>
+
+      <!-- Address / hours -->
+      <div class="contact-info-box">
+        <div class="contact-info-item">
+          <span class="contact-info-item__icon">📍</span>
+          <div>
+            <strong>Location</strong>
+            <p>Jaysingpur, Kolhapur District, Maharashtra, India</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <span class="contact-info-item__icon">🕘</span>
+          <div>
+            <strong>Working Hours</strong>
+            <p>Mon – Sat : 9:00 AM – 7:00 PM</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <span class="contact-info-item__icon">📧</span>
+          <div>
+            <strong>Email</strong>
+            <p>vighnahartainteriors@gmail.com</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="footer-col-2">
+            <img src="images/logo1.jpg" alt="Vighnaharta Logo" />
+            <p>
+              "Crafting Timeless Wooden Interiors to Enrich Every Home."
+              "Sustainably Designed Woodwork for Beautiful Living Spaces."
+            </p>
+          </div>
+          <div class="footer-col-3">
+            <h3>Follow Us</h3>
+            <ul>
+              <li>
+                <a href="https://www.facebook.com/share/199rTxgHs7/"
+                  >Facebook</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/vighnahartajaysingpur?igsh=MWF1NmpzaWhicDNtNg=="
+                  >Instagram</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://youtube.com/@omkarsutar9231?si=MWVcyYJgZU0RmVL7"
+                  >Youtube</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <hr />
+        <p class="copyright">Copyright 2026</p>
+      </div>
+    </div>
+
+    <script>
+      var MenuItems = document.getElementById("MenuItems");
+      MenuItems.style.maxHeight = "0px";
+      function menutoggle() {
+        if (MenuItems.style.maxHeight === "0px" || !MenuItems.style.maxHeight) {
+          MenuItems.style.maxHeight = "450px";
+        } else {
+          MenuItems.style.maxHeight = "0px";
+        }
+      }
+    </script>
+  </body>
+</html>

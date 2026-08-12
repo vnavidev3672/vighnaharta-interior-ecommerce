@@ -1,0 +1,207 @@
+/* =============================================
+   contact.css  –  page-specific styles ONLY
+   Shared navbar (.page-header) lives in about.css
+   All global styles live in style.css
+   ============================================= */
+
+/* Import the shared page-header + nav styles from about.css
+   (because Contact uses the same header component) */
+
+/* ---- Contact Hero ---- */
+.contact-hero {
+  width: 100%;
+  min-height: 300px;
+  background: url("images/sofa3.jpg") center 60% / cover no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 10, 5, 0.60);
+}
+
+.contact-hero__overlay {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: #fff;
+  padding: 40px 20px;
+}
+
+.contact-hero__title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.55);
+  margin-bottom: 12px;
+  letter-spacing: 0.04em;
+}
+
+.contact-hero__sub {
+  font-size: 1.1rem;
+  color: #e8c9a0;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+/* ---- Main wrapper ---- */
+.contact-main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+}
+
+/* ---- Contact cards ---- */
+.contact-cards {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.contact-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 36px 40px;
+  text-align: center;
+  box-shadow: 0 6px 30px rgba(45, 30, 20, 0.1);
+  border-top: 5px solid #8b4513;
+  flex: 1 1 240px;
+  max-width: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(139, 69, 19, 0.18);
+}
+
+.contact-card__icon {
+  font-size: 2.4rem;
+  margin-bottom: 14px;
+}
+
+.contact-card__label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #3c2416;
+  margin-bottom: 10px;
+}
+
+.contact-card__number {
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #8b4513;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.25s;
+}
+
+.contact-card__number:hover {
+  color: #c8860a;
+}
+
+/* ---- Social links ---- */
+.contact-social {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.contact-social__title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c1a0e;
+  margin-bottom: 18px;
+}
+
+.contact-social__links {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.contact-social__btn {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.contact-social__btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.contact-social__btn--insta {
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+
+.contact-social__btn--yt {
+  background: #ff0000;
+}
+
+/* ---- Info box ---- */
+.contact-info-box {
+  background: #fff;
+  border-radius: 18px;
+  padding: 36px 40px;
+  box-shadow: 0 6px 30px rgba(45, 30, 20, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.contact-info-item__icon {
+  font-size: 1.8rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.contact-info-item strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #2c1a0e;
+  margin-bottom: 4px;
+}
+
+.contact-info-item p {
+  font-size: 0.95rem;
+  color: #6a4d38;
+  margin: 0;
+  line-height: 1.55;
+  text-shadow: none;
+}
+
+/* ---- Responsive ---- */
+@media only screen and (max-width: 600px) {
+  .contact-hero__title {
+    font-size: 2rem;
+  }
+
+  .contact-info-box {
+    padding: 24px 20px;
+  }
+
+  .contact-card {
+    padding: 26px 24px;
+  }
+}
