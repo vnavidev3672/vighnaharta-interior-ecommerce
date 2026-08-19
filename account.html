@@ -226,7 +226,11 @@
             localStorage.setItem("username", data.user.username);
             showToast("Login successful! Redirecting...");
             setTimeout(function () {
-              window.location.href = "index.html";
+              if (String(data.user.role) === "1") {
+                window.location.href = "admin.html";
+              } else {
+                window.location.href = "index.html";
+              }
             }, 1000);
           } else {
             showToast(data.message || "Login failed", "error");

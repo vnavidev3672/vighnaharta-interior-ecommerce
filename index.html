@@ -178,7 +178,6 @@
             <a
               href="products.html?cat=Darawaja"
               class="featured-card"
-              onclick="return checkLogin(event);"
             >
               <img src="images/maindoor(1).jpg" alt="Polished main door" />
               <h4>Polished Main Door</h4>
@@ -188,7 +187,6 @@
             <a
               href="products.html?cat=Divaan"
               class="featured-card"
-              onclick="return checkLogin(event);"
             >
               <img src="images/cradle3.jpg" alt="Wooden cradle / divan" />
               <h4>Designer Cradle</h4>
@@ -198,7 +196,6 @@
             <a
               href="products.html?cat=Devara"
               class="featured-card"
-              onclick="return checkLogin(event);"
             >
               <img src="images/devaara.jpg" alt="Wooden devaara" />
               <h4>Handcrafted Devara</h4>
@@ -208,7 +205,6 @@
             <a
               href="products.html?cat=Bed"
               class="featured-card"
-              onclick="return checkLogin(event);"
             >
               <img src="images/sofa1.jpg" alt="Wooden Bed" />
               <h4>Premium Wooden Bed</h4>
@@ -268,17 +264,6 @@
         } else {
           MenuItems.style.maxHeight = "0px";
         }
-      }
-
-      // Check if user is logged in before viewing products
-      function checkLogin(e) {
-        if (!localStorage.getItem("token")) {
-          e.preventDefault();
-          alert("Please login or signup to view this product!");
-          window.location.href = "account.html";
-          return false;
-        }
-        return true;
       }
 
       // Check Admin Login status

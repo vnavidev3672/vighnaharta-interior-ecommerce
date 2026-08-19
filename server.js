@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import cors from "cors";
 import connectDB from "./config/db.js";
+import { seedDefaultImages } from "./seedImages.js";
 import { exec } from "child_process";
 import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
@@ -21,7 +22,9 @@ try {
 dotenv.config();
 //database config
 
-connectDB();
+connectDB().then(() => {
+  seedDefaultImages();
+});
 
 import mongoose from "mongoose";
 

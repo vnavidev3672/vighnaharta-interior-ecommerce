@@ -183,6 +183,30 @@
           MenuItems.style.maxHeight = "0px";
         }
       }
+
+      // Check Admin status
+      const isAdmin = localStorage.getItem("token") && localStorage.getItem("userRole") === "1";
+      if (isAdmin) {
+        if (MenuItems && !document.getElementById("adminNavLi")) {
+          const adminLi = document.createElement("li");
+          adminLi.id = "adminNavLi";
+          adminLi.innerHTML = `<a href="admin.html" style="color:#ff523b; font-weight:bold;">⚙️ Admin Panel</a>`;
+          MenuItems.insertBefore(adminLi, MenuItems.lastElementChild);
+        }
+        const accountLink = document.getElementById("accountLink");
+        if (accountLink) {
+          accountLink.textContent = "Logout (Admin)";
+          accountLink.href = "#";
+          accountLink.onclick = function (e) {
+            e.preventDefault();
+            localStorage.removeItem("token");
+            localStorage.removeItem("userRole");
+            localStorage.removeItem("username");
+            alert("Logged out");
+            window.location.href = "index.html";
+          };
+        }
+      }
     </script>
   </body>
 </html>
