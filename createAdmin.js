@@ -3,6 +3,9 @@ import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import User from "./models/userModel.js";
 
+import dns from "dns";
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
+
 dotenv.config();
 
 const createAdmin = async () => {

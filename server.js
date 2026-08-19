@@ -10,8 +10,12 @@ import adminRoutes from "./routes/adminRoutes.js";
 // 1. Import the core DNS module
 import dns from "dns";
 
-// 2. Force Node.js to use Google DNS to bypass the 'querySrv ECONNREFUSED' error
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
+// 2. Safely set DNS servers (helpful on Windows local environment)
+try {
+  dns.setServers(["8.8.8.8", "8.8.4.4"]);
+} catch (dnsErr) {
+  console.log("DNS setServers warning:", dnsErr.message);
+}
 
 //configure env
 dotenv.config();
@@ -19,13 +23,23 @@ dotenv.config();
 
 connectDB();
 
-
+import mongoose from "mongoose";
 
 const app = express();
 //middleware
 app.use(cors());
 app.use(express.json());
 app.use(morgan(`dev`));
+
+// Health check endpoint for debugging DB status
+app.get("/api/health", (req, res) => {
+  const dbStatus = ["Disconnected", "Connected", "Connecting", "Disconnecting"];
+  res.json({
+    status: "ok",
+    dbState: dbStatus[mongoose.connection.readyState] || "Unknown",
+    hasMongoUrl: Boolean(process.env.MONGO_URL)
+  });
+});
 
 //routes
 app.use("/api/auth", authRoutes);
