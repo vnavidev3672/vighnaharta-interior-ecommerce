@@ -2,6 +2,7 @@ import express from "express";
 import multer from "multer";
 import Image from "../models/imageModel.js";
 import path from "path";
+import fs from "fs";
 
 const router = express.Router();
 
@@ -48,6 +49,31 @@ router.get("/images/:category", async (req, res) => {
     res.status(200).send({ success: true, images });
   } catch (error) {
     res.status(500).send({ success: false, message: "Error fetching images", error });
+  }
+});
+
+// Delete Image API
+router.delete("/images/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const image = await Image.findById(id);
+    if (!image) {
+      return res.status(404).send({ success: false, message: "Image not found" });
+    }
+
+    // Try to remove file from disk if it exists
+    if (image.imageUrl && fs.existsSync(image.imageUrl)) {
+      try {
+        fs.unlinkSync(image.imageUrl);
+      } catch (err) {
+        console.log("Could not delete file from disk:", err.message);
+      }
+    }
+
+    await Image.findByIdAndDelete(id);
+    res.status(200).send({ success: true, message: "Image deleted successfully" });
+  } catch (error) {
+    res.status(500).send({ success: false, message: "Error deleting image", error: error.message });
   }
 });
 

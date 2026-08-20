@@ -59,6 +59,12 @@
           <hr id="Indicator" />
         </div>
 
+        <!-- Logged in Admin Banner -->
+        <div id="alreadyLoggedInBanner" style="display:none; text-align:center; padding:15px; background:#f0fff4; border:1px solid #c6f6d5; border-radius:8px; margin-bottom:15px;">
+          <p style="margin:0 0 10px 0; color:#276749; font-weight:600; font-size:14px;">Logged in as Admin (<span id="loggedInUserDisplay">omkar3672</span>)</p>
+          <a href="admin.html" style="display:inline-block; padding:8px 16px; background:#ff523b; color:#fff; text-decoration:none; border-radius:6px; font-weight:600; font-size:13px;">⚙️ Open Admin Panel</a>
+        </div>
+
         <!-- Login Form -->
         <form id="LoginForm">
           <input
@@ -241,6 +247,20 @@
           showToast("Network error. Please try again.", "error");
           btn.textContent = "Login";
           btn.disabled = false;
+        }
+      });
+
+      // Check if already logged in as Admin on page load
+      window.addEventListener("DOMContentLoaded", function () {
+        var token = localStorage.getItem("token");
+        var role = localStorage.getItem("userRole");
+        var uname = localStorage.getItem("username") || "Admin";
+
+        if (token && String(role) === "1") {
+          var banner = document.getElementById("alreadyLoggedInBanner");
+          var userDisp = document.getElementById("loggedInUserDisplay");
+          if (banner) banner.style.display = "block";
+          if (userDisp) userDisp.textContent = uname;
         }
       });
     </script>

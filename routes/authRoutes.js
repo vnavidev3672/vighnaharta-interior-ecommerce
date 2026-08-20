@@ -32,9 +32,13 @@ router.post("/login", async (req, res) => {
     if (!username || !password) {
       return res.status(400).send({ success: false, message: "Please provide username/email and password" });
     }
-    // Allow login with either username or email
+    const queryTerm = username.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Allow login with either username or email (case-insensitive)
     const user = await User.findOne({
-      $or: [{ username: username }, { email: username }]
+      $or: [
+        { username: { $regex: new RegExp("^" + queryTerm + "$", "i") } },
+        { email: { $regex: new RegExp("^" + queryTerm + "$", "i") } }
+      ]
     });
     if (!user) {
       return res.status(404).send({ success: false, message: "User not found. Please check your username or email." });

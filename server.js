@@ -5,6 +5,7 @@ import morgan from "morgan";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import { seedDefaultImages } from "./seedImages.js";
+import { seedAdminUser } from "./createAdmin.js";
 import { exec } from "child_process";
 import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
@@ -22,8 +23,9 @@ try {
 dotenv.config();
 //database config
 
-connectDB().then(() => {
-  seedDefaultImages();
+connectDB().then(async () => {
+  await seedAdminUser();
+  await seedDefaultImages();
 });
 
 import mongoose from "mongoose";

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="lightbox.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
@@ -197,16 +198,18 @@
       <a href="index.html#contact" style="display:block; color:#fff8f0; padding:14px 20px; border-bottom:1px solid rgba(255,255,255,0.08); font-size:15px; text-decoration:none;">📞 Contact</a>
       <a href="account.html" style="display:block; color:#fff8f0; padding:14px 20px; border-bottom:1px solid rgba(255,255,255,0.08); font-size:15px; text-decoration:none;">👤 Account</a>
       <button onclick="showSection('upload')" style="display:block; width:100%; text-align:left; background:none; border:none; border-bottom:1px solid rgba(255,255,255,0.08); color:#ff523b; padding:14px 20px; font-size:15px; cursor:pointer;">📷 Upload Image</button>
+      <button onclick="showSection('manage')" style="display:block; width:100%; text-align:left; background:none; border:none; border-bottom:1px solid rgba(255,255,255,0.08); color:#e67e22; padding:14px 20px; font-size:15px; cursor:pointer;">🖼️ Manage & Delete Images</button>
       <button onclick="showSection('quotation')" style="display:block; width:100%; text-align:left; background:none; border:none; border-bottom:1px solid rgba(255,255,255,0.08); color:#27ae60; padding:14px 20px; font-size:15px; cursor:pointer;">📑 Create Quotation</button>
       <button onclick="logout()" style="display:block; width:100%; text-align:left; background:none; border:none; color:#e74c3c; padding:14px 20px; font-size:15px; cursor:pointer;">🚪 Logout</button>
     </div>
 
     <!-- Admin Tab Buttons (desktop) -->
-    <div style="text-align: center; margin: 18px auto 0; max-width: 800px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; padding: 0 15px;">
-      <a href="index.html" style="padding: 10px 20px; background: #333; color: #fff; border-radius: 5px; text-decoration: none; font-weight: 500;">🏠 Homepage</a>
-      <button id="tabUploadBtn" onclick="showSection('upload')" style="padding: 10px 20px; background: #ff523b; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 15px; font-weight: 600;">📷 Upload Image</button>
-      <button id="tabQuoteBtn" onclick="showSection('quotation')" style="padding: 10px 20px; background: #555; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 15px; font-weight: 600;">📑 Create Quotation</button>
-      <button onclick="logout()" style="padding: 10px 20px; background: #e74c3c; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 15px;">Logout</button>
+    <div style="text-align: center; margin: 18px auto 0; max-width: 900px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; padding: 0 15px;">
+      <a href="index.html" style="padding: 10px 18px; background: #333; color: #fff; border-radius: 5px; text-decoration: none; font-weight: 500;">🏠 Homepage</a>
+      <button id="tabUploadBtn" onclick="showSection('upload')" style="padding: 10px 18px; background: #ff523b; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 15px; font-weight: 600;">📷 Upload Image</button>
+      <button id="tabManageBtn" onclick="showSection('manage')" style="padding: 10px 18px; background: #555; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 15px; font-weight: 600;">🖼️ Manage & Delete</button>
+      <button id="tabQuoteBtn" onclick="showSection('quotation')" style="padding: 10px 18px; background: #555; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 15px; font-weight: 600;">📑 Create Quotation</button>
+      <button onclick="logout()" style="padding: 10px 18px; background: #e74c3c; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 15px;">Logout</button>
     </div>
 
     <!-- Section 1: Upload Image -->
@@ -236,7 +239,33 @@
       </form>
     </div>
 
-    <!-- Section 2: Create Quotation -->
+    <!-- Section 2: Manage & Delete Images -->
+    <div class="admin-container" id="manageSection" style="max-width: 900px; display: none;">
+      <h2>Manage & Delete Product Images</h2>
+      <p style="text-align: center; color: #666; margin-bottom: 20px; font-size: 14px;">
+        View all uploaded images, click an image to enlarge, or click <strong>Delete</strong> to remove an image from the server.
+      </p>
+
+      <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; align-items: center;">
+        <label style="font-weight: 600; color: #444;">Filter Category:</label>
+        <select id="manageCategoryFilter" onchange="renderManageGrid()" style="padding: 8px 14px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; background: #fff;">
+          <option value="All">All Categories</option>
+          <option value="Darawaja">Darawaja (Doors)</option>
+          <option value="Divaan">Divaan</option>
+          <option value="Chair">Chair</option>
+          <option value="Devara">Devara</option>
+          <option value="Bed">Bed</option>
+          <option value="Other">Other</option>
+        </select>
+        <button onclick="loadManageImages()" style="padding: 8px 16px; background: #333; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px;">🔄 Refresh List</button>
+      </div>
+
+      <div id="manageImagesGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px;">
+        <p style="grid-column: 1 / -1; text-align: center; color: #888; padding: 20px;">Loading images...</p>
+      </div>
+    </div>
+
+    <!-- Section 3: Create Quotation -->
     <div class="admin-container" id="quotationSection" style="max-width: 850px; display: none;">
       <h2>Create Quotation</h2>
       
@@ -321,8 +350,8 @@
       document.getElementById('quoteDate').innerText = 'Date: ' + new Date().toLocaleDateString();
       // Simple Auth Check — localStorage always returns strings, so compare as '1'
       const storedRole = localStorage.getItem('userRole');
-      if (!storedRole || storedRole !== '1') {
-        alert("Unauthorized access! Redirecting to login.");
+      if (!storedRole || String(storedRole) !== '1') {
+        alert("Unauthorized access! Redirecting to login page.");
         window.location.href = 'account.html';
       }
 
@@ -335,20 +364,177 @@
 
       function showSection(section) {
         const uploadSec = document.getElementById('uploadSection');
+        const manageSec = document.getElementById('manageSection');
         const quoteSec = document.getElementById('quotationSection');
         const tabUploadBtn = document.getElementById('tabUploadBtn');
+        const tabManageBtn = document.getElementById('tabManageBtn');
         const tabQuoteBtn = document.getElementById('tabQuoteBtn');
 
+        uploadSec.style.display = 'none';
+        manageSec.style.display = 'none';
+        quoteSec.style.display = 'none';
+
+        tabUploadBtn.style.background = '#555';
+        tabManageBtn.style.background = '#555';
+        tabQuoteBtn.style.background = '#555';
+
         if (section === 'quotation') {
-          uploadSec.style.display = 'none';
           quoteSec.style.display = 'block';
-          tabUploadBtn.style.background = '#555';
-          tabQuoteBtn.style.background = '#ff523b';
+          tabQuoteBtn.style.background = '#27ae60';
+        } else if (section === 'manage') {
+          manageSec.style.display = 'block';
+          tabManageBtn.style.background = '#e67e22';
+          loadManageImages();
         } else {
           uploadSec.style.display = 'block';
-          quoteSec.style.display = 'none';
           tabUploadBtn.style.background = '#ff523b';
-          tabQuoteBtn.style.background = '#555';
+        }
+      }
+
+      // Manage Images State & Functions
+      let allManageImages = [];
+
+      function syncCategoryDropdowns(images = []) {
+        const catSelect = document.getElementById('category');
+        const manageFilterSelect = document.getElementById('manageCategoryFilter');
+
+        const defaultCats = [
+          { value: 'Darawaja', label: 'Darawaja (Doors)' },
+          { value: 'Divaan', label: 'Divaan' },
+          { value: 'Chair', label: 'Chair' },
+          { value: 'Devara', label: 'Devara' },
+          { value: 'Bed', label: 'Bed' },
+          { value: 'Other', label: 'Other' }
+        ];
+
+        const customCats = JSON.parse(localStorage.getItem('customCategories') || '[]');
+        const allCatsMap = new Map();
+
+        defaultCats.forEach(c => allCatsMap.set(c.value.toLowerCase(), { value: c.value, label: c.label }));
+        customCats.forEach(c => {
+          const val = c.id || c.value;
+          const lbl = c.label || c.name || val;
+          if (val) allCatsMap.set(val.toLowerCase(), { value: val, label: lbl });
+        });
+
+        images.forEach(img => {
+          if (img.category && !allCatsMap.has(img.category.toLowerCase())) {
+            const val = img.category;
+            const lbl = val.charAt(0).toUpperCase() + val.slice(1).replace(/-/g, ' ');
+            allCatsMap.set(val.toLowerCase(), { value: val, label: lbl });
+          }
+        });
+
+        if (catSelect) {
+          const currentVal = catSelect.value;
+          allCatsMap.forEach(cat => {
+            let exists = false;
+            for (let i = 0; i < catSelect.options.length; i++) {
+              if (catSelect.options[i].value.toLowerCase() === cat.value.toLowerCase()) {
+                exists = true;
+                break;
+              }
+            }
+            if (!exists) {
+              const opt = document.createElement('option');
+              opt.value = cat.value;
+              opt.textContent = cat.label;
+              catSelect.appendChild(opt);
+            }
+          });
+          if (currentVal) catSelect.value = currentVal;
+        }
+
+        if (manageFilterSelect) {
+          const currentFilter = manageFilterSelect.value;
+          allCatsMap.forEach(cat => {
+            let exists = false;
+            for (let i = 0; i < manageFilterSelect.options.length; i++) {
+              if (manageFilterSelect.options[i].value.toLowerCase() === cat.value.toLowerCase()) {
+                exists = true;
+                break;
+              }
+            }
+            if (!exists) {
+              const opt = document.createElement('option');
+              opt.value = cat.value;
+              opt.textContent = cat.label;
+              manageFilterSelect.appendChild(opt);
+            }
+          });
+          if (currentFilter) manageFilterSelect.value = currentFilter;
+        }
+      }
+
+      async function loadManageImages() {
+        const grid = document.getElementById('manageImagesGrid');
+        if (!grid) return;
+        grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #888; padding: 20px;">Loading images...</p>';
+
+        try {
+          const res = await fetch('/api/admin/images');
+          const data = await res.json();
+          if (data.success) {
+            allManageImages = data.images || [];
+            syncCategoryDropdowns(allManageImages);
+            renderManageGrid();
+          } else {
+            grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: red;">Failed to load images.</p>';
+          }
+        } catch (err) {
+          console.error(err);
+          grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: red;">Error connecting to server.</p>';
+        }
+      }
+
+      function renderManageGrid() {
+        const grid = document.getElementById('manageImagesGrid');
+        const filterCat = document.getElementById('manageCategoryFilter').value;
+
+        let filtered = allManageImages;
+        if (filterCat !== 'All') {
+          filtered = allManageImages.filter(img => img.category.toLowerCase() === filterCat.toLowerCase());
+        }
+
+        if (filtered.length === 0) {
+          grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #777; padding: 30px; background: #f9f9f9; border-radius: 8px;">No images found in this category.</p>';
+          return;
+        }
+
+        grid.innerHTML = filtered.map(img => `
+          <div style="background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 12px; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: transform 0.2s;">
+            <div style="width: 100%; height: 140px; overflow: hidden; border-radius: 6px; background: #f5f5f5; margin-bottom: 10px; cursor: pointer;" onclick="openLightbox('/${img.imageUrl}', '${img.title.replace(/'/g, "\\'")}')">
+              <img src="/${img.imageUrl}" alt="${img.title}" style="width: 100%; height: 100%; object-fit: contain;" />
+            </div>
+            <h4 style="font-size: 14px; margin: 0 0 4px 0; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%;" title="${img.title}">${img.title}</h4>
+            <span style="font-size: 12px; background: #eee; color: #666; padding: 2px 8px; border-radius: 12px; margin-bottom: 10px;">${img.category}</span>
+            <button onclick="deleteImage('${img._id}', '${img.title.replace(/'/g, "\\'")}')" style="width: 100%; background: #e74c3c; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 4px;">
+              🗑️ Delete
+            </button>
+          </div>
+        `).join('');
+      }
+
+      async function deleteImage(id, title) {
+        if (!confirm(`Are you sure you want to delete "${title || 'this image'}"? This action cannot be undone.`)) {
+          return;
+        }
+
+        try {
+          const res = await fetch(`/api/admin/images/${id}`, {
+            method: 'DELETE'
+          });
+          const data = await res.json();
+          if (data.success) {
+            alert('Image deleted successfully!');
+            allManageImages = allManageImages.filter(img => img._id !== id);
+            renderManageGrid();
+          } else {
+            alert(data.message || 'Failed to delete image');
+          }
+        } catch (err) {
+          console.error(err);
+          alert('Network error while deleting image');
         }
       }
 
@@ -364,6 +550,8 @@
 
       if (requestedAction === 'quotation') {
         showSection('quotation');
+      } else if (requestedAction === 'manage') {
+        showSection('manage');
       } else {
         showSection('upload');
       }
@@ -485,23 +673,7 @@
 
       // Initialize category dropdown from URL or localStorage
       window.addEventListener('DOMContentLoaded', () => {
-        const catSelect = document.getElementById('category');
-        if (!catSelect) return;
-
-        // 1. Load from localStorage
-        const customCats = JSON.parse(localStorage.getItem('customCategories') || '[]');
-        customCats.forEach(cat => {
-          let exists = false;
-          for (let i = 0; i < catSelect.options.length; i++) {
-            if (catSelect.options[i].value.toLowerCase() === cat.id.toLowerCase()) exists = true;
-          }
-          if (!exists) {
-            const opt = document.createElement('option');
-            opt.value = cat.id;
-            opt.textContent = cat.label;
-            catSelect.appendChild(opt);
-          }
-        });
+        syncCategoryDropdowns([]);
 
         // 2. Pre-select from URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -525,5 +697,6 @@
         }
       });
     </script>
+    <script src="lightbox.js"></script>
   </body>
 </html>

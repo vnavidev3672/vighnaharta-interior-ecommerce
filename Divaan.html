@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Divaan - Vighnaharta</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="lightbox.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&family=Quicksand:wght@300..700&display=swap"
-      rel="stylesheet"
-    />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&family=Quicksand:wght@300..700&display=swap"
       rel="stylesheet"
@@ -26,11 +23,11 @@
       <div class="navbar">
         <nav>
           <ul id="MenuItems">
-            <li><a href="">Home</a></li>
-            <li><a href="">Products</a></li>
-            <li><a href="">About</a></li>
-            <li><a href="">Contact</a></li>
-            <li><a href="">Account</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="About.html">About</a></li>
+            <li><a href="Contact.html">Contact</a></li>
+            <li><a href="account.html">Account</a></li>
           </ul>
         </nav>
         <img
@@ -113,7 +110,7 @@
 
       async function loadProducts() {
         try {
-          const res = await fetch('http://localhost:8080/api/admin/images/Divaan');
+          const res = await fetch('/api/admin/images/Divaan');
           const data = await res.json();
           if (data.success) {
             const container = document.getElementById('product-container');
@@ -126,7 +123,7 @@
               const div = document.createElement('div');
               div.className = 'col-4';
               div.innerHTML = `
-                <img src="http://localhost:8080/${image.imageUrl}" alt="${image.title}" />
+                <img src="/${image.imageUrl}" alt="${image.title}" />
                 <h4>${image.title}</h4>
               `;
               container.appendChild(div);
@@ -140,6 +137,7 @@
       
       window.onload = loadProducts;
     </script>
+    <script src="lightbox.js"></script>
     <script src="translate.js"></script>
   </body>
     <!-- <script>
